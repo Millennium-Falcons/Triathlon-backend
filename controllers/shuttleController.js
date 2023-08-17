@@ -25,4 +25,16 @@ const createShuttle =asyncHandler((req,res)=>{
     });
 
 
-module.exports = {getShuttles,getShuttleById,createShuttle};
+ const addPassenger =asyncHandler((req,res)=>{
+        console.log("req body :",req.body);
+        const{name,email,gender,phone,address} = req.body;
+        if(!name || !origin ||!destination||!arrivalTime ||!departureTime || !capacity || !type){
+            res.status(400);
+            throw new Error("All fields are mandotory");
+    
+        }
+        res.status(200).json({message:"create shuttle"})
+        });
+
+
+module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger};
