@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Destination {
+  destination_id  Int      @id @default(autoincrement())
+  name            String
+  location        String
+  pricePerPerson  Float
+  climate         String
+  culture         String
+  rating          Float
+  description     String
+}
+
+
+model Shuttle {
+  shuttle_id    Int      @id @default(autoincrement())
+  name          String
+  origin        String
+  destination   String
+  capacity      Int
+  type          String
+  arrivalTime   DateTime
+  departureTime DateTime
+}
+
+
+

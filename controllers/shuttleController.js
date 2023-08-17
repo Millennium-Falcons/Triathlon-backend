@@ -1,5 +1,4 @@
 const  asyncHandler = require("express-async-handler");
-
 // @desc Get all destinations
 // @route GET /api/destinations
 
@@ -25,7 +24,7 @@ const createShuttle =asyncHandler((req,res)=>{
     });
 
 
- const addPassenger =asyncHandler((req,res)=>{
+const addPassenger =asyncHandler((req,res)=>{
         console.log("req body :",req.body);
         const{name,email,gender,phone,address} = req.body;
         if(!name || !origin ||!destination||!arrivalTime ||!departureTime || !capacity || !type){
