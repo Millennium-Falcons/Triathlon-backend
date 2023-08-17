@@ -9,7 +9,7 @@ router.route('/').get(getShuttles);
 router.route('/:id').get(getShuttleById);
 
 
-router.route('/:id').post(addPassenger);
+router.route('/:id/passenger').post(addPassenger);
     
 
 router.route('/').post(createShuttle);

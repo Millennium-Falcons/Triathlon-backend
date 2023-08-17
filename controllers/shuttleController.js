@@ -65,16 +65,42 @@ const createShuttle = async (req, res) => {
         }
 };   
 
-const addPassenger =asyncHandler((req,res)=>{
-        console.log("req body :",req.body);
-        const{name,email,gender,phone,address} = req.body;
-        if(!name || !origin ||!destination||!arrivalTime ||!departureTime || !capacity || !type){
-            res.status(400);
-            throw new Error("All fields are mandotory");
-    
-        }
-        res.status(200).json({message:"create shuttle"})
+
+
+
+const addPassenger = asyncHandler(async (req, res) => {
+    console.log("req body:", req.body);
+    const { name, email, gender, phone, address } = req.body;
+
+    // Check if the required fields are provided in the request body
+    if (!name || !email || !gender || !phone || !address) {
+        res.status(400);
+        throw new Error("All fields are mandatory");
+    }
+
+    try {
+        const shuttleId = parseInt(req.params.id, 10); // Convert shuttleId to an integer
+
+        // Create a new passenger record and connect it to the specified shuttle
+        const createdPassenger = await prisma.passenger.create({
+            data: {
+                name,
+                email,
+                gender,
+                phone,
+                address,
+                shuttleId ,
+            }
         });
+
+        res.status(200).json({ message: "Passenger added successfully", passenger: createdPassenger });
+    } catch (error) {
+        console.error("Error adding passenger:", error);
+        res.status(500).json({ message: "Failed to add passenger" });
+    }
+});
+
+
 
 
 module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger};
