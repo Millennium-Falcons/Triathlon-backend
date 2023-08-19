@@ -5,7 +5,7 @@ CREATE TABLE `Passenger` (
     `email` VARCHAR(191) NOT NULL,
     `gender` VARCHAR(191) NOT NULL,
     `phone` VARCHAR(191) NOT NULL,
-    `address` VARCHAR(191) NOT NULL,
+    `location` VARCHAR(191) NOT NULL,
     `shuttleId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)

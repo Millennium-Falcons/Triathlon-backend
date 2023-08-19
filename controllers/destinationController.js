@@ -64,7 +64,30 @@ const getDestinations = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error.' });
       }
     };
+
     
+    //testing
+    const bookShuttle=(async (req, res) => {
+      const { from, to, date, passengers, ticketType } = req.body;
+  
+      try {
+          // Create a new shuttle booking in the database
+          const newBooking = await prisma.booking.create({
+              data: {
+                  from,
+                  to,
+                  date,
+                  passengers,
+                  ticketType,
+              },
+          });
+  
+          return res.status(201).json({ message: 'Shuttle booked successfully', bookingId: newBooking.id });
+      } catch (error) {
+          console.error('Error booking shuttle:', error);
+          return res.status(500).json({ error: 'Internal server error.' });
+      }
+  });
   
 
-module.exports = {getDestinations,getDestinationById,createDestination};
+module.exports = {getDestinations,getDestinationById,createDestination,bookShuttle};

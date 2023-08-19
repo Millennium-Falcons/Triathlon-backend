@@ -4,7 +4,7 @@ CREATE TABLE `Destination` (
     `name` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `pricePerPerson` DOUBLE NOT NULL,
-    `climate` VARCHAR(191) NOT NULL,
+    `climate` VARCHAR(191) NOT NULL, 
     `culture` VARCHAR(191) NOT NULL,
     `rating` DOUBLE NOT NULL,
     `description` VARCHAR(191) NOT NULL,
@@ -24,4 +24,16 @@ CREATE TABLE `Shuttle` (
     `departureTime` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`shuttle_id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+-- CreateTable testing
+CREATE TABLE `Booking` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `from` VARCHAR(191) NOT NULL,
+    `to` VARCHAR(191) NOT NULL,
+    `date` DATETIME NOT NULL,
+    `passengers` INT NOT NULL,
+    `ticketType` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

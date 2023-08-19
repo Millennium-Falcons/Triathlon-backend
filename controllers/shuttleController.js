@@ -70,10 +70,10 @@ const createShuttle = async (req, res) => {
 
 const addPassenger = asyncHandler(async (req, res) => {
     console.log("req body:", req.body);
-    const { name, email, gender, phone, address } = req.body;
+    const { name, email, gender, phone, location } = req.body;
 
     // Check if the required fields are provided in the request body
-    if (!name || !email || !gender || !phone || !address) {
+    if (!name || !email || !gender || !phone || !location) {
         res.status(400);
         throw new Error("All fields are mandatory");
     }
@@ -85,10 +85,10 @@ const addPassenger = asyncHandler(async (req, res) => {
         const createdPassenger = await prisma.passenger.create({
             data: {
                 name,
-                email,
+                email, 
                 gender,
                 phone,
-                address,
+                location,
                 shuttleId ,
             }
         });
@@ -100,7 +100,30 @@ const addPassenger = asyncHandler(async (req, res) => {
     }
 });
 
+//testing
+//Get Seat Locations
+const getLocationsByShuttleId = asyncHandler(async (req, res) => {
+    const shuttleId = parseInt(req.params.shuttleId);
+  
+    try {
+      const locations = await prisma.passenger.findMany({
+        where: {
+          shuttleId,
+        },
+        select: {
+          location: true,
+        },
+      });
+  
+      const locationArray = locations.map((passenger) => passenger.location);
+  
+      return res.status(200).json(locationArray);
+    } catch (error) {
+      console.error("Error fetching locations:", error);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+  });
 
 
 
-module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger};
+module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger,getLocationsByShuttleId};
