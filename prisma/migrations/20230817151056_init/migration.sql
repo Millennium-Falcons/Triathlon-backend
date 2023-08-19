@@ -37,3 +37,12 @@ CREATE TABLE `Booking` (
     `ticketType` VARCHAR(50) NOT NULL,
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable testing
+CREATE TABLE `bookingTBL` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `bookingId` INT NOT NULL,
+    `number_of_passengers` INT NOT NULL,
+    `Total_cost` DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

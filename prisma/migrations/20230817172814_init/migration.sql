@@ -7,6 +7,8 @@ CREATE TABLE `Passenger` (
     `phone` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `shuttleId` INTEGER NOT NULL,
+    `bookingId` INTEGER NOT NULL,
+
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

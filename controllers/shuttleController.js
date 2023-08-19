@@ -79,7 +79,8 @@ const addPassenger = asyncHandler(async (req, res) => {
     }
 
     try {
-        const shuttleId = parseInt(req.params.id, 10); // Convert shuttleId to an integer
+        const shuttleId = parseInt(req.params.id, 10);
+        const bookingId = parseInt(req.params.bId, 10); // Convert shuttleId to an integer
 
         // Create a new passenger record and connect it to the specified shuttle
         const createdPassenger = await prisma.passenger.create({
@@ -90,6 +91,7 @@ const addPassenger = asyncHandler(async (req, res) => {
                 phone,
                 location,
                 shuttleId ,
+                bookingId,
             }
         });
 
@@ -149,6 +151,50 @@ const getLocationsByShuttleId = asyncHandler(async (req, res) => {
     }
 });
 
+//testing save booking record
+
+const saveBookingRecord = asyncHandler(async (req, res) => {
+    const { bookingId } = req.params;
 
 
-module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger,getLocationsByShuttleId,getShuttlesByCriteria};
+    try {
+        // Retrieve passengers with the given bookingId
+        const passengers = await prisma.passenger.findMany({
+            where: {
+                bookingId: parseInt(bookingId),
+            },
+        });
+
+        // Calculate total cost based on shuttle type and number of passengers
+        let totalCost = 0;
+        for (const passenger of passengers) {
+            const shuttle = await prisma.shuttle.findUnique({
+                where: { shuttle_id: passenger.shuttleId },
+            });
+            console.log(shuttle);
+
+
+            const costPerPassenger = shuttle.type === 'economy' ? 1000 : 2000;
+            totalCost += costPerPassenger;
+        }
+
+        // Create a new booking record in bookingTBL
+        const newBookingRecord = await prisma.bookingTBL.create({
+            data: {
+                bookingId: parseInt(bookingId),
+                number_of_passengers: passengers.length,
+                Total_cost: totalCost,
+            },
+        });
+
+        res.status(201).json({ message: 'Booking record saved successfully', bookingRecord: newBookingRecord });
+    } catch (error) {
+        console.error('Error saving booking record:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+
+
+module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger,getLocationsByShuttleId,getShuttlesByCriteria,saveBookingRecord};

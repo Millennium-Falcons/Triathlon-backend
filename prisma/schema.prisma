@@ -43,6 +43,9 @@ model Passenger {
   phone      String
   location    String
   shuttleId  Int
+  bookingId  Int
+
+
 }
 
 
@@ -53,4 +56,11 @@ model Booking {
     date       DateTime
     passengers Int
     ticketType String
+}
+
+model BookingTBL {
+    id                  Int      @id @default(autoincrement())
+    bookingId           Int
+    number_of_passengers Int
+    Total_cost          Decimal
 }
