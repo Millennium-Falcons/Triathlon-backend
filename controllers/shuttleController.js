@@ -124,6 +124,31 @@ const getLocationsByShuttleId = asyncHandler(async (req, res) => {
     }
   });
 
+  //testing searching for shuttles
+  const getShuttlesByCriteria = asyncHandler(async (req, res) => {
+    const { origin, destination, time } = req.params;
+
+    try {
+        const shuttles = await prisma.shuttle.findMany({
+            where: {
+                origin: origin,
+                destination: destination,
+                arrivalTime: {
+                    lte: new Date(time)
+                },
+                departureTime: {
+                    gte: new Date(time)
+                }
+            }
+        });
+
+        res.status(200).json(shuttles);
+    } catch (error) {
+        console.error('Error fetching shuttles:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
+});
 
 
-module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger,getLocationsByShuttleId};
+
+module.exports = {getShuttles,getShuttleById,createShuttle,addPassenger,getLocationsByShuttleId,getShuttlesByCriteria};
